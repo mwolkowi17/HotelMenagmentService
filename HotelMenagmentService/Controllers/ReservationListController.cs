@@ -31,6 +31,7 @@ namespace HotelMenagmentService.Controllers
 
         public IActionResult AddReservation(int idroom, int idguest, DateTime checkin, DateTime checkout)
         {
+            if (ModelState.IsValid) { 
             Room RoomToRent = (from Room item in _context.Rooms
                                where item.RoomID == idroom
                                select item).SingleOrDefault();
@@ -50,7 +51,19 @@ namespace HotelMenagmentService.Controllers
             
             _context.Reserevations.Add(NewReservation);
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ValidationText = "Please enter correct check-in and check-out value!";
+            }
+
+            var singlereservation = from n in _context.Reserevations
+                                    select n;
+            var reservationVM = new HotelViewModel
+            {
+                ReservationList = singlereservation.ToList()
+            };
+            return View(reservationVM);
         }
     }
 }
