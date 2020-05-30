@@ -1,5 +1,5 @@
 ﻿@model HotelMenagmentService.Models.HotelViewModel
-   
+
 
 @{
     ViewData["Title"] = "Index";
@@ -62,9 +62,6 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.RoomID)
                             </td>
-                            <td>
-                                <a asp-action="DeleteReservation" asp-route-id="@item.ReservationID">Delete</a>
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -94,8 +91,9 @@
                             <input type="text" class="form-control" name="checkout">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="text-danger">@ViewBag.NoFreeRooms @ViewBag.ValidationText</div>
                     </form>
-            </div>
+                </div>
             </div>
         </div>
     </div>
