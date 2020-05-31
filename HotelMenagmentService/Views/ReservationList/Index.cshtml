@@ -76,10 +76,14 @@
                     <h5 class="card-title">Reservation Panel</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Add New Reservation</h6>
                     <form asp-controller="ReservationList" asp-action="AddReservationB" autocomplete="off">
+                        
                         <div class="form-group">
-                            <label for="exampleInputEmail1">RoomType</label>
-                            <input type="text" class="form-control" name="type" aria-describedby="emailHelp">
+                            <label for="exampleFormControlSelect1">Room Type</label>
+                            <select class="form-control" name="type" id="exampleFormControlSelect1">
+                                <option value="0">single person</option>
+                                <option value="1">double person</option>
 
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">GuestID</label>
