@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelMenagmentService.Data;
@@ -81,6 +82,98 @@ namespace HotelMenagmentService.Controllers
                 Guest GuestToRent = (from Guest item in _context.Guests
                                      where item.GuestID == idguest
                                      select item).SingleOrDefault();
+
+                if (RoomToRent != null)
+                {
+                    RoomToRent.is_ocuppied = true;
+
+                    Reservation NewReservation = new Reservation();
+                    NewReservation.status = 0;
+                    NewReservation.GuestID = GuestToRent.GuestID;
+                    NewReservation.GuestName = (GuestToRent.name + " " + GuestToRent.surname);
+                    NewReservation.RoomID = RoomToRent.RoomID;
+                    NewReservation.check_in = checkin;
+                    NewReservation.check_out = checkout;
+
+                    _context.Reserevations.Add(NewReservation);
+                    _context.SaveChanges();
+
+                }
+                if (RoomToRent == null)
+                {
+                    ViewBag.NoFreeRooms = "No rooms available.";
+                }
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ValidationText = "Please enter correct check-in and check-out value!";
+            }
+            var singlereservation = from n in _context.Reserevations
+                                    select n;
+            var reservationVM = new HotelViewModel
+            {
+                ReservationList = singlereservation.ToList()
+            };
+            return View(reservationVM);
+        }
+
+        public IActionResult AddReservationC(RoomType type, int idguest, DateTime checkin, DateTime checkout)
+        {
+            if (ModelState.IsValid)
+            {
+                var RoomToRentTypeList = (from Room item in _context.Rooms
+                                          where item.nubmerbeds == type
+                                          select item).ToList();
+                
+                Guest GuestToRent = (from Guest item in _context.Guests
+                                     where item.GuestID == idguest
+                                     select item).SingleOrDefault();
+                var RoomTypeNumbers = (from Room n in RoomToRentTypeList
+                                       select n.RoomID).ToList();
+                var ReservationTypes = (from Reservation n in _context.Reserevations
+                                        where RoomTypeNumbers.Contains(n.RoomID)
+                                        select n);
+
+                
+                // filtering method propsal
+                DateTime checkinvalue = new DateTime();
+                DateTime checkoutvalue = new DateTime();
+                checkinvalue = checkin;
+                checkoutvalue = checkout;
+                int numberOfRoomProposal = (from Reservation m in ReservationTypes
+                                            where (m.check_in <= checkinvalue
+                                            && m.check_out <= checkinvalue) ||
+                                            (m.check_in >= checkoutvalue
+                                            && m.check_out >= checkoutvalue)
+                                            select m.RoomID).FirstOrDefault();
+                var RoomToRent = (from Room n in RoomToRentTypeList
+                                  where n.RoomID == numberOfRoomProposal
+                                  select n).FirstOrDefault();
+
+               /* bool IsRoomAvailableOnDate(int roomNumber, DateTime date)
+                {
+                    //change this to match your data source
+                    List<Reservation> bookings = _context.Reserevations.ToList();
+
+                    // get all bookings that have a start date and end date within your timeframe
+                    // to linq może być ścieżką
+                    var bookingsWithinDate = from Reservation n in bookings
+                                             where n.RoomID == roomNumber
+                                             && n.check_in <= date
+                                             && n.check_out >= date
+                                             select n;
+
+                    if (bookingsWithinDate.Any())
+                    {
+                        //bookings found that match date and room number
+                        return false;
+                    }
+                    else
+                    {
+                        //no bookings
+                        return true;
+                    }
+                }*/
 
                 if (RoomToRent != null)
                 {
