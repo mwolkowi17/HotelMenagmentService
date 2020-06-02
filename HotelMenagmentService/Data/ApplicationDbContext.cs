@@ -16,6 +16,6 @@ namespace HotelMenagmentService.Data
         public DbSet<Room>Rooms { get; set; }
         public DbSet<Guest>Guests { get; set; }
         public DbSet<Reservation>Reserevations { get; set; }
-
+        public DbSet<ReservationHistory>ReservationHistoryItems { get; set; }
     }
 }
