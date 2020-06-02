@@ -40,29 +40,32 @@
                 <tbody>
                     @foreach (var item in Model.ReservationList)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ReservationID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.check_in)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modleItem => item.check_out)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.status)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.made_by)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GuestName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RoomID)
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReservationID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.check_in)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modleItem => item.check_out)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.made_by)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GuestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoomID)
+                        </td>
+                        <td>
+                            <a asp-action="DeleteReservation" asp-route-id="@item.ReservationID">Delete</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

@@ -134,46 +134,36 @@ namespace HotelMenagmentService.Controllers
                                         where RoomTypeNumbers.Contains(n.RoomID)
                                         select n);
 
-                
+                // need db for checkin&checkoutvalues
                 // filtering method propsal
                 DateTime checkinvalue = new DateTime();
                 DateTime checkoutvalue = new DateTime();
                 checkinvalue = checkin;
                 checkoutvalue = checkout;
                 int numberOfRoomProposal = (from Reservation m in ReservationTypes
-                                            where (m.check_in <= checkinvalue
-                                            && m.check_out <= checkinvalue) ||
-                                            (m.check_in >= checkoutvalue
-                                            && m.check_out >= checkoutvalue)
+                                            where (checkinvalue < m.check_in 
+                                            && checkoutvalue < m.check_in  ) ||
+                                            (checkinvalue > m.check_out 
+                                            && checkoutvalue > m.check_out)
                                             select m.RoomID).FirstOrDefault();
-                var RoomToRent = (from Room n in RoomToRentTypeList
+                // lista numerów zajętych w konkretnej dacie
+                var numbersOfRoomOccupied = (from Reservation m in ReservationTypes
+                                            where (checkinvalue >= m.check_in
+                                            && checkinvalue <= m.check_out) ||
+                                            (checkoutvalue >= m.check_in
+                                            && checkoutvalue <= m.check_out)
+                                            select m.RoomID).ToList();
+                // lista z wyrzuconymi zajętymi numerami
+                var RoomsToRent = (from Room n in RoomToRentTypeList
+                                   where !numbersOfRoomOccupied.Contains(n.RoomID)
+                                   select n).ToList();
+                /*var RoomToRent = (from Room n in RoomToRentTypeList
                                   where n.RoomID == numberOfRoomProposal
+                                  select n).FirstOrDefault();*/
+
+                var RoomToRent = (from Room n in RoomsToRent
                                   select n).FirstOrDefault();
 
-               /* bool IsRoomAvailableOnDate(int roomNumber, DateTime date)
-                {
-                    //change this to match your data source
-                    List<Reservation> bookings = _context.Reserevations.ToList();
-
-                    // get all bookings that have a start date and end date within your timeframe
-                    // to linq może być ścieżką
-                    var bookingsWithinDate = from Reservation n in bookings
-                                             where n.RoomID == roomNumber
-                                             && n.check_in <= date
-                                             && n.check_out >= date
-                                             select n;
-
-                    if (bookingsWithinDate.Any())
-                    {
-                        //bookings found that match date and room number
-                        return false;
-                    }
-                    else
-                    {
-                        //no bookings
-                        return true;
-                    }
-                }*/
 
                 if (RoomToRent != null)
                 {
