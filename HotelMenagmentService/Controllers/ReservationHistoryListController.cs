@@ -28,5 +28,21 @@ namespace HotelMenagmentService.Controllers
             };
             return View(reservationHistoryVM);
         }
+
+        public IActionResult AddReservationHistoryItem( int id)
+        {
+            Reservation ReservationToArchive = (from Reservation item in _context.Reserevations
+                                                where item.ReservationID == id
+                                                select item).FirstOrDefault();
+            ReservationHistory NewReservationHistoryItem = new ReservationHistory();
+            NewReservationHistoryItem.check_in_History = ReservationToArchive.check_in;
+            NewReservationHistoryItem.check_out_History = ReservationToArchive.check_out;
+            NewReservationHistoryItem.GuestID_History = ReservationToArchive.GuestID;
+            NewReservationHistoryItem.GuestName_History = ReservationToArchive.GuestName;
+            NewReservationHistoryItem.RoomID_History = ReservationToArchive.RoomID;
+            _context.ReservationHistoryItems.Add(NewReservationHistoryItem);
+            _context.SaveChanges();
+            return View();
+        }
     }
 }

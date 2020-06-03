@@ -207,8 +207,20 @@ namespace HotelMenagmentService.Controllers
             var roomreserved = (from Room n in _context.Rooms
                                 where n.RoomID == reservationtodelete.RoomID
                                 select n).FirstOrDefault();
+            
+            
+            Reservation ReservationToArchive = (from Reservation item in _context.Reserevations
+                                                where item.ReservationID == id
+                                                select item).FirstOrDefault();
+            ReservationHistory NewReservationHistoryItem = new ReservationHistory();
+            NewReservationHistoryItem.check_in_History = ReservationToArchive.check_in;
+            NewReservationHistoryItem.check_out_History = ReservationToArchive.check_out;
+            NewReservationHistoryItem.GuestID_History = ReservationToArchive.GuestID;
+            NewReservationHistoryItem.GuestName_History = ReservationToArchive.GuestName;
+            NewReservationHistoryItem.RoomID_History = ReservationToArchive.RoomID;
+
+            _context.ReservationHistoryItems.Add(NewReservationHistoryItem);
             _context.Reserevations.Remove(reservationtodelete);
-            roomreserved.is_ocuppied = false;
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
