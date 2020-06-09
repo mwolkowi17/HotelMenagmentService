@@ -18,18 +18,8 @@
                         <th>
                             ReservationID
                         </th>
-                        <th>
-                            check in
-                        </th>
-                        <th>
-                            check out
-                        </th>
-                        <th>
-                            status
-                        </th>
-                        <th>
-                            made_by
-                        </th>
+                       
+                        
                         <th>
                             Guest Name
                         </th>
@@ -45,25 +35,17 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.ReservationID)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.check_in)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modleItem => item.check_out)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.status)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.made_by)
-                            </td>
+                            
+                            
                             <td>
                                 @Html.DisplayFor(modelItem => item.GuestName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.RoomID)
                             </td>
-                            
+                            <td>
+                                <a asp-action="SelectReservation" asp-route-id="@item.ReservationID">Select</a>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -77,12 +59,7 @@
                         <th>
                             Room ID
                         </th>
-                        <th>
-                            Room Number
-                        </th>
-                        <th>
-                            Room Name
-                        </th>
+                       
                         <th>
                             for smokers
                         </th>
@@ -94,23 +71,21 @@
                 <tbody>
                     @foreach (var item in Model.RoomList)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RoomID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.number)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.smoke)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nubmerbeds)
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoomID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.smoke)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nubmerbeds)
+                        </td>
+                        <td>
+                            <a asp-action="SelectRoom" asp-route-id="@item.RoomID">Select</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

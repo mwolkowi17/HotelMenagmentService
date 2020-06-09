@@ -1,0 +1,50 @@
+﻿@model HotelMenagmentService.Models.HotelViewModel
+
+
+@{
+    ViewData["Title"] = "Selected Room";
+}
+
+<h1>Check In</h1>
+<div class="container">
+    <div class="row">
+       
+        <div class="col">
+            <h3> Selected Room</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Room ID
+                        </th>
+
+                        <th>
+                            for smokers
+                        </th>
+                        <th>
+                            room type
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RoomList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomID)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.smoke)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nubmerbeds)
+                            </td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

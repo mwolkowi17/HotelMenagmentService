@@ -34,5 +34,30 @@ namespace HotelMenagmentService.Controllers
             };
             return View(checkindata);
         }
+
+        public IActionResult SelectRoom(int id)
+        {
+            var roomselected = from n in _context.Rooms
+                               where n.RoomID == id
+                               select n;
+            var checkindata = new HotelViewModel
+            {
+                RoomList = roomselected.ToList()
+            };
+            return View(checkindata);
+        }
+
+        public IActionResult SelectReservation(int id)
+        {
+            var reservationselected = from n in _context.Reserevations
+                                      where n.ReservationID == id
+                                      select n;
+            var checkindata = new HotelViewModel
+            {
+                ReservationList = reservationselected.ToList()
+            };
+
+            return View(checkindata);
+        }
     }
 }
