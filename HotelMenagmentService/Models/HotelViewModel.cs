@@ -11,5 +11,6 @@ namespace HotelMenagmentService.Models
         public List<Guest> GuestList { get; set; }
         public List<Reservation> ReservationList { get; set; }
         public List<ReservationHistory>ReservationHistoryList { get; set; }
+        public List<Reservation> ReservedForToday { get; set; }
     }
 }

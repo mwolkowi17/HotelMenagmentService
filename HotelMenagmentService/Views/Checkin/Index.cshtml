@@ -1,0 +1,119 @@
+﻿@model HotelMenagmentService.Models.HotelViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Check In</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3> Reservations for Today</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+
+
+                        <th>
+                            ReservationID
+                        </th>
+                        <th>
+                            check in
+                        </th>
+                        <th>
+                            check out
+                        </th>
+                        <th>
+                            status
+                        </th>
+                        <th>
+                            made_by
+                        </th>
+                        <th>
+                            Guest Name
+                        </th>
+                        <th>
+                            Room ID
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ReservedForToday)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReservationID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.check_in)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modleItem => item.check_out)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.made_by)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GuestName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomID)
+                            </td>
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <h3> Rooms available Today</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Room ID
+                        </th>
+                        <th>
+                            Room Number
+                        </th>
+                        <th>
+                            Room Name
+                        </th>
+                        <th>
+                            for smokers
+                        </th>
+                        <th>
+                            room type
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RoomList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoomID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.number)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.smoke)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nubmerbeds)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
