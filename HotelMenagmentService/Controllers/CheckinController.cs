@@ -13,7 +13,7 @@ namespace HotelMenagmentService.Controllers
     public class CheckinController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public CheckinController( ApplicationDbContext context)
+        public CheckinController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace HotelMenagmentService.Controllers
             {
                 ReservedForToday = roomreservedfortoday.ToList(),
                 RoomList = roomnotoccupiedtoday.ToList()
-                
+
             };
             return View(checkindata);
         }
@@ -58,6 +58,18 @@ namespace HotelMenagmentService.Controllers
             };
 
             return View(checkindata);
+        }
+        public IActionResult CheckinAdd(int id)
+        {
+            var roomnumbertocheckin = from n in _context.Reserevations
+                                      where n.ReservationID == id
+                                      select n.RoomID;
+            var roomtocheckin = from m in _context.Rooms
+                                where m.RoomID == roomnumbertocheckin.First()
+                                select m;
+            roomtocheckin.First().is_ocuppied = true;
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

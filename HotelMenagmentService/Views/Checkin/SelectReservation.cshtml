@@ -31,20 +31,22 @@
                 <tbody>
                     @foreach (var item in Model.ReservationList)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ReservationID)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReservationID)
+                        </td>
 
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GuestName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RoomID)
-                            </td>
-                           
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GuestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoomID)
+                        </td>
+                        <td>
+                            <a asp-action="CheckinAdd" asp-route-id="@item.ReservationID">Check-In</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
