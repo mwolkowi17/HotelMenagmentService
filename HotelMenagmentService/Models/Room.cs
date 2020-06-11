@@ -17,5 +17,6 @@ namespace HotelMenagmentService.Models
         public bool is_ocuppied { get; set; }
         public bool smoke { get; set; }
         public RoomType nubmerbeds { get; set; }
+        public string Guest { get; set; }
     }
 }

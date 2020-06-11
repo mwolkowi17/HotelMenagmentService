@@ -29,6 +29,9 @@
             <th>
                 room type
             </th>
+            <th>
+                Guest Name
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +55,9 @@
                </td>
                <td>
                    @Html.DisplayFor(modelItem=>item.nubmerbeds)
+               </td>
+               <td>
+                   @Html.DisplayFor(modelItem=>item.Guest)
                </td>
            </tr>
         }
