@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+//using AspNetCore;
 using HotelMenagmentService.Data;
 using HotelMenagmentService.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -101,7 +103,13 @@ namespace HotelMenagmentService.Controllers
             roomtocheckin.First().is_ocuppied = true;
             roomtocheckin.First().Guest = name +" " + surname;
             _context.SaveChanges();
-            
+
+            var newguest = new Guest();
+            newguest.name = name;
+            newguest.surname = surname;
+            newguest.member_since = DateTime.Today;
+
+            //if(!_context.Users.Contains(newguest))
             
             ViewBag.CheckinInformation = "Check-in Complete.";
             ViewBag.CheckinData = $"Room nr {id} has been rented to {name} {surname}";
@@ -111,12 +119,21 @@ namespace HotelMenagmentService.Controllers
             var roomnotoccupiedtoday = from m in _context.Rooms
                                        where m.is_ocuppied == false
                                        select m;
+            var simpleguest = from n in _context.Guests
+                              select n;
             var checkindata = new HotelViewModel
             {
                 ReservedForToday = roomreservedfortoday.ToList(),
-                RoomList = roomnotoccupiedtoday.ToList()
+                RoomList = roomnotoccupiedtoday.ToList(),
+                GuestList = simpleguest.ToList()
 
             };
+            
+            if (!checkindata.GuestList.Contains(newguest))
+            {
+                _context.Guests.Add(newguest);
+                _context.SaveChanges();
+            }
             return View(checkindata);
         }
     }
