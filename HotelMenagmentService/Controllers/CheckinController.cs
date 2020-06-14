@@ -110,7 +110,12 @@ namespace HotelMenagmentService.Controllers
             newguest.member_since = DateTime.Today;
 
             //if(!_context.Users.Contains(newguest))
-            
+
+            var guestcontain = from n in _context.Guests
+                               where n.name == name && n.surname == surname
+                               select n;
+
+
             ViewBag.CheckinInformation = "Check-in Complete.";
             ViewBag.CheckinData = $"Room nr {id} has been rented to {name} {surname}";
             var roomreservedfortoday = from o in _context.Reserevations
@@ -128,8 +133,9 @@ namespace HotelMenagmentService.Controllers
                 GuestList = simpleguest.ToList()
 
             };
-            
-            if (!checkindata.GuestList.Contains(newguest))
+            //do zrobienia bo nie działa dobrze
+            //if (!checkindata.GuestList.Contains(newguest))
+            if(guestcontain.ToList().Count==0)
             {
                 _context.Guests.Add(newguest);
                 _context.SaveChanges();

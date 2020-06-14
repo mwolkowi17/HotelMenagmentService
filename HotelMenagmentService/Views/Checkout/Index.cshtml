@@ -37,29 +37,32 @@
     <tbody>
         @foreach (var item in Model.RoomList)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoomID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.number)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.is_ocuppied)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.smoke)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nubmerbeds)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Guest)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_ocuppied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.smoke)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nubmerbeds)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Guest)
+            </td>
+            <td>
+                <a asp-action="CheckOutGuest" asp-route-id="@item.RoomID">Check-Out</a>
+            </td>
+        </tr>
         }
     </tbody>
 

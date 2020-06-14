@@ -30,5 +30,25 @@ namespace HotelMenagmentService.Controllers
             };
             return View(checkoutdata);
         }
+
+        public IActionResult CheckOutGuest (int id)
+        {
+            var roomtocheckout = from n in _context.Rooms
+                                 where n.RoomID == id
+                                 select n;
+            roomtocheckout.FirstOrDefault().is_ocuppied = false;
+            roomtocheckout.FirstOrDefault().Guest = null;
+            _context.SaveChanges();
+
+            var room = from n in _context.Rooms
+                       where n.is_ocuppied == true
+                       select n;
+
+            var checkoutdata = new HotelViewModel()
+            {
+                RoomList = room.ToList()
+            };
+            return View(checkoutdata);
+        }
     }
 }
