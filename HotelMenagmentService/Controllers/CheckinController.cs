@@ -101,6 +101,7 @@ namespace HotelMenagmentService.Controllers
                                 where m.RoomID == id
                                 select m;
             roomtocheckin.First().is_ocuppied = true;
+
             roomtocheckin.First().Guest = name +" " + surname;
             _context.SaveChanges();
 
